@@ -1,0 +1,23 @@
+POST http://localhost:3000/chat
+Content-Type: application/json
+
+{
+  "prompt": "crie um mapa mental com uma imagem ilustrativa sobre Conteúdo: História do Brasil. "
+}
+###
+POST http://localhost:3000/chat/quiz
+Content-Type: application/json
+
+{
+  "topic": "História do Brasil"
+}
+
+###
+
+POST http://localhost:3000/chat/questao
+Content-Type: application/json
+
+{
+  "question": "O que é Bind Shell?",
+  "answer": "O sistema abre uma porta e espera uma conexão com o invasor (porque o sistema já foi atacado anteriormente)"
+}
