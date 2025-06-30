@@ -24,4 +24,10 @@ export class ChatController {
     const result = await this.iaService.evaluateAnswer(body.question, body.answer);
     return { result };
   }
+
+  @Post('mindmap')
+  async mindmap(@Body('topic') topic: string) {
+    const mindmap = await this.iaService.generateMindMapPrompt(topic);
+    return { mindmap };
+  }
 }

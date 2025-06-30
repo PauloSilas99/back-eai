@@ -21,3 +21,11 @@ Content-Type: application/json
   "question": "O que é Bind Shell?",
   "answer": "O sistema abre uma porta e espera uma conexão com o invasor (porque o sistema já foi atacado anteriormente)"
 }
+
+###
+POST http://localhost:3000/chat/mindmap
+Content-Type: application/json
+
+{
+  "topic": "Fotossíntese"
+}
