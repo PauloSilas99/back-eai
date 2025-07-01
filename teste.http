@@ -27,5 +27,5 @@ POST http://localhost:3000/chat/mindmap
 Content-Type: application/json
 
 {
-  "topic": "Fotossíntese"
+  "topic": "Ciclo de vida da água"
 }
