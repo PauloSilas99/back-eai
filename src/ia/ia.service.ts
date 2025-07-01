@@ -9,7 +9,7 @@ export class IaService {
   private genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 
   async getGeminiResponse(prompt: string): Promise<string> {
-    const model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const result = await model.generateContent(prompt);
     // eslint-disable-next-line @typescript-eslint/await-thenable
