@@ -1,31 +1,185 @@
+# ========================================
+# TESTES DE USUÁRIOS
+# ========================================
+
+# Criar um novo usuário
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "joao@exemplo.com",
+  "name": "João Silva"
+}
+
+###
+
+# Buscar todos os usuários
+GET http://localhost:3000/users
+
+###
+
+# Buscar usuário por ID (substitua pelo ID real)
+GET http://localhost:3000/users/USER_ID_AQUI
+
+###
+
+# Buscar usuário por email
+GET http://localhost:3000/users/email/joao@exemplo.com
+
+###
+
+# Atualizar usuário (substitua pelo ID real)
+PUT http://localhost:3000/users/USER_ID_AQUI
+Content-Type: application/json
+
+{
+  "name": "João Silva Atualizado"
+}
+
+###
+
+# Buscar estatísticas do usuário (substitua pelo ID real)
+GET http://localhost:3000/users/USER_ID_AQUI/stats
+
+###
+
+# ========================================
+# TESTES DE IA COM USUÁRIO VÁLIDO
+# ========================================
+
+# Chat com usuário (substitua USER_ID_AQUI pelo ID real)
 POST http://localhost:3000/chat
 Content-Type: application/json
 
 {
-  "prompt": "crie um mapa mental com uma imagem ilustrativa sobre Conteúdo: História do Brasil. "
+  "prompt": "crie um mapa mental com uma imagem ilustrativa sobre Conteúdo: História do Brasil. ",
+  "userId": "USER_ID_AQUI"
 }
+
 ###
+
+# Quiz com usuário
 POST http://localhost:3000/chat/quiz
 Content-Type: application/json
 
 {
-  "topic": "História do Brasil"
+  "topic": "História do Brasil",
+  "userId": "USER_ID_AQUI"
 }
 
 ###
 
+# Avaliação de questão com usuário
 POST http://localhost:3000/chat/questao
 Content-Type: application/json
 
 {
   "question": "O que é Bind Shell?",
-  "answer": "O sistema abre uma porta e espera uma conexão com o invasor (porque o sistema já foi atacado anteriormente)"
+  "answer": "O sistema abre uma porta e espera uma conexão com o invasor (porque o sistema já foi atacado anteriormente)",
+  "userId": "USER_ID_AQUI"
 }
 
 ###
+
+# Mapa mental com usuário
 POST http://localhost:3000/chat/mindmap
 Content-Type: application/json
 
 {
-  "topic": "Ciclo de vida da água"
+  "topic": "Ciclo de vida da água",
+  "userId": "USER_ID_AQUI"
 }
+
+###
+
+# ========================================
+# HISTÓRICO POR USUÁRIO
+# ========================================
+
+# Histórico de chats do usuário
+GET http://localhost:3000/chat/history?userId=USER_ID_AQUI
+
+###
+
+# Histórico de quizzes do usuário
+GET http://localhost:3000/chat/quiz/history?userId=USER_ID_AQUI
+
+###
+
+# Histórico de mapas mentais do usuário
+GET http://localhost:3000/chat/mindmap/history?userId=USER_ID_AQUI
+
+###
+
+# ========================================
+# TESTES DE PLANOS
+# ========================================
+
+# Ver todos os planos disponíveis
+GET http://localhost:3000/plans
+
+###
+
+# Ver plano gratuito
+GET http://localhost:3000/plans/free
+
+###
+
+# Ver plano premium
+GET http://localhost:3000/plans/premium
+
+###
+
+# Ver plano do usuário (substitua USER_ID_AQUI)
+GET http://localhost:3000/plans/user/USER_ID_AQUI
+
+###
+
+# Verificar se usuário pode fazer requisição
+GET http://localhost:3000/plans/user/USER_ID_AQUI/can-request
+
+###
+
+# Fazer upgrade para premium (substitua USER_ID_AQUI)
+POST http://localhost:3000/plans/user/USER_ID_AQUI/upgrade
+Content-Type: application/json
+
+{
+  "stripeCustomerId": "cus_123456789"
+}
+
+###
+
+# Fazer downgrade para gratuito (substitua USER_ID_AQUI)
+POST http://localhost:3000/plans/user/USER_ID_AQUI/downgrade
+
+###
+
+# Resetar contador de requisições (substitua USER_ID_AQUI)
+POST http://localhost:3000/plans/user/USER_ID_AQUI/reset-requests
+
+###
+
+# ========================================
+# TESTES SEM USUÁRIO (ainda funcionam)
+# ========================================
+
+# Chat sem usuário
+POST http://localhost:3000/chat
+Content-Type: application/json
+
+{
+  "prompt": "Explique o que é JavaScript"
+}
+
+###
+
+# Quiz sem usuário
+POST http://localhost:3000/chat/quiz
+Content-Type: application/json
+
+{
+  "topic": "Programação"
+}
+
+###
