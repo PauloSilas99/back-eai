@@ -1,0 +1,95 @@
+### Teste de Autenticação e Sistema de Usuários
+
+### 1. Registrar novo usuário
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@exemplo.com",
+  "password": "senha123"
+}
+
+### 2. Fazer login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@exemplo.com",
+  "password": "senha123"
+}
+
+### 3. Usar chat com IA (substitua TOKEN_AQUI pelo token recebido no login)
+POST http://localhost:3000/chat
+Content-Type: application/json
+Authorization: Bearer TOKEN_AQUI
+
+{
+  "prompt": "Explique o que é inteligência artificial"
+}
+
+### 4. Gerar quiz (substitua TOKEN_AQUI pelo token recebido no login)
+POST http://localhost:3000/chat/quiz
+Content-Type: application/json
+Authorization: Bearer TOKEN_AQUI
+
+{
+  "topic": "História do Brasil"
+}
+
+### 5. Verificar limites do usuário (substitua USER_ID e TOKEN_AQUI)
+GET http://localhost:3000/users/USER_ID/limits
+Authorization: Bearer TOKEN_AQUI
+
+### 6. Fazer upgrade para premium (substitua USER_ID e TOKEN_AQUI)
+POST http://localhost:3000/users/USER_ID/upgrade
+Authorization: Bearer TOKEN_AQUI
+
+### 7. Verificar estatísticas do usuário (substitua USER_ID e TOKEN_AQUI)
+GET http://localhost:3000/users/USER_ID/stats
+Authorization: Bearer TOKEN_AQUI
+
+### 8. Atualizar dados do usuário (substitua USER_ID e TOKEN_AQUI)
+PUT http://localhost:3000/users/USER_ID
+Content-Type: application/json
+Authorization: Bearer TOKEN_AQUI
+
+{
+  "name": "João Silva Atualizado",
+  "email": "joao.novo@exemplo.com"
+}
+
+### 9. Buscar usuário por email (substitua EMAIL e TOKEN_AQUI)
+GET http://localhost:3000/users/email/joao@exemplo.com
+Authorization: Bearer TOKEN_AQUI
+
+### 10. Listar todos os usuários (substitua TOKEN_AQUI)
+GET http://localhost:3000/users
+Authorization: Bearer TOKEN_AQUI
+
+### 11. Teste de erro - Email já existe
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Outro Usuário",
+  "email": "joao@exemplo.com",
+  "password": "senha123"
+}
+
+### 12. Teste de erro - Credenciais inválidas
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@exemplo.com",
+  "password": "senha_errada"
+}
+
+### 13. Teste de erro - Endpoint sem autenticação
+POST http://localhost:3000/chat
+Content-Type: application/json
+
+{
+  "prompt": "Teste sem token"
+} 

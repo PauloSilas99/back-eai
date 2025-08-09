@@ -26,10 +26,7 @@ export class IaService {
       }
 
       // Verificar se o usuário pode fazer requisição
-      const canMakeRequest = await this.plansService.canMakeRequest(userId);
-      if (!canMakeRequest) {
-        throw new Error('Limite de requisições atingido. Faça upgrade para o plano premium para continuar.');
-      }
+      await this.usersService.checkRequestLimit(userId);
     }
 
     const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -44,7 +41,7 @@ export class IaService {
 
     // Incrementa o contador de requisições se houver userId
     if (userId) {
-      await this.plansService.incrementRequestCount(userId);
+      await this.usersService.incrementRequestCount(userId);
     }
 
     return responseText;
@@ -57,6 +54,9 @@ export class IaService {
       if (!user) {
         throw new Error('Usuário não encontrado');
       }
+
+      // Verificar se o usuário pode fazer requisição
+      await this.usersService.checkRequestLimit(userId);
     }
 
     const prompt = `
@@ -97,6 +97,9 @@ export class IaService {
       if (!user) {
         throw new Error('Usuário não encontrado');
       }
+
+      // Verificar se o usuário pode fazer requisição
+      await this.usersService.checkRequestLimit(userId);
     }
 
     const prompt = `
@@ -137,6 +140,9 @@ export class IaService {
       if (!user) {
         throw new Error('Usuário não encontrado');
       }
+
+      // Verificar se o usuário pode fazer requisição
+      await this.usersService.checkRequestLimit(userId);
     }
 
     const prompt = `

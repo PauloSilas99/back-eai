@@ -1,51 +1,66 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, UseGuards, Request } from '@nestjs/common';
 import { IaService } from './ia.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('chat')
 export class ChatController {
   constructor(private readonly iaService: IaService) {}
 
   @Post()
-  async chat(@Body() body: { prompt: string; userId?: string }) {
-    const result = await this.iaService.getGeminiResponse(body.prompt, body.userId);
+  @UseGuards(JwtAuthGuard)
+  async chat(@Body() body: { prompt: string }, @Request() req) {
+    const userId = req.user.sub;
+    const result = await this.iaService.getGeminiResponse(body.prompt, userId);
     return { response: result };
   }
 
   @Post('quiz')
-  async quiz(@Body() body: { topic: string; userId?: string }) {
-    const quiz = await this.iaService.generateQuiz(body.topic, body.userId);
+  @UseGuards(JwtAuthGuard)
+  async quiz(@Body() body: { topic: string }, @Request() req) {
+    const userId = req.user.sub;
+    const quiz = await this.iaService.generateQuiz(body.topic, userId);
     return { quiz };
   }
 
   @Post('questao')
-  async answer(@Body() body: { question: string; answer: string; userId?: string }) {
-    const result = await this.iaService.evaluateAnswer(body.question, body.answer, body.userId);
+  @UseGuards(JwtAuthGuard)
+  async answer(@Body() body: { question: string; answer: string }, @Request() req) {
+    const userId = req.user.sub;
+    const result = await this.iaService.evaluateAnswer(body.question, body.answer, userId);
     return { result };
   }
 
   @Post('mindmap')
-  async mindmap(@Body() body: { topic: string; userId?: string }) {
-    const mindmap = await this.iaService.generateMindMapPrompt(body.topic, body.userId);
+  @UseGuards(JwtAuthGuard)
+  async mindmap(@Body() body: { topic: string }, @Request() req) {
+    const userId = req.user.sub;
+    const mindmap = await this.iaService.generateMindMapPrompt(body.topic, userId);
     return { mindmap };
   }
 
   // Novos endpoints para histórico
   @Get('history')
-  async getChatHistory(@Query('userId') userId?: string) {
+  @UseGuards(JwtAuthGuard)
+  async getChatHistory(@Request() req) {
+    const userId = req.user.sub;
     const history = await this.iaService.getChatHistory(userId);
     return { history };
   }
 
   @Get('quiz/history')
-  async getQuizHistory(@Query('userId') userId?: string) {
+  @UseGuards(JwtAuthGuard)
+  async getQuizHistory(@Request() req) {
+    const userId = req.user.sub;
     const history = await this.iaService.getQuizHistory(userId);
     return { history };
   }
 
   @Get('mindmap/history')
-  async getMindMapHistory(@Query('userId') userId?: string) {
+  @UseGuards(JwtAuthGuard)
+  async getMindMapHistory(@Request() req) {
+    const userId = req.user.sub;
     const history = await this.iaService.getMindMapHistory(userId);
     return { history };
   }
